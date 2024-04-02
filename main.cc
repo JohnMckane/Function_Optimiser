@@ -20,16 +20,16 @@ void print_pool(int size, Sample pool[])
 			cout << pool[i].GetChromosoneAsString() << endl;
 		}
 }
-void breed(Sample s1, Sample s2, Sample& r1, Sample& r2)
+void breed(Sample s1, Sample s2, Sample*& r1, Sample*& r2)
 {
 	unsigned char t1, t2, h1, h2;
 	int cross_point = rand() % 8;
-	t1 = (s1._chromosone << cross_point) >> cross_point;
-	t2 = (s2._chromosone << cross_point) >> cross_point;
-	h1 = (s1._chromosone >> cross_point) << cross_point;
-	h2 = (s2._chromosone >> cross_point) << cross_point;
-	r1 =  Sample(t1 | h2);
-	r2 =  Sample(t2 | h1);
+	t1 = (unsigned char)(s1._chromosone << cross_point) >> cross_point;
+	t2 = (unsigned char)(s2._chromosone << cross_point) >> cross_point;
+	h1 = (unsigned char)(s1._chromosone >> (8- cross_point)) << (8-cross_point);
+	h2 = (unsigned char)(s2._chromosone >> (8-cross_point)) << (8-cross_point);
+	r1 = new Sample(t1 | h2);
+	r2 =  new Sample(t2 | h1);
 
 }
 // Score will be 1/ distance of phenotype from 1
@@ -63,10 +63,6 @@ int main() {
 	cin >> breed_string;
 	breed_rate = stof(breed_string);
 	Sample pool[size];
-	sortPool(size, pool);
-	for(int i = 0; i < 10; i++)
-	{
-		cout << pool[i].Phenotype() << "," << score(pool[i])  << endl;
 	}
 	return 0;
 }
