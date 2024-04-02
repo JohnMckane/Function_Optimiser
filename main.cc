@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Sample.h"
+using namespace std;
 void mutate(int size, float mutation_rate, Sample pool[])
 {
 	int n_to_mutate = (int)(size * mutation_rate);
@@ -10,7 +11,13 @@ void mutate(int size, float mutation_rate, Sample pool[])
 		pool[index]._chromosone = pool[index]._chromosone ^ (unsigned char) (1 << rand() % 8 );
 	}
 }
-using namespace std;
+void print_pool(int size, Sample pool[])
+{
+for(int i = 0; i < size; i++)
+	{
+		cout << pool[i].GetChromosoneAsString() << endl;
+	}
+}
 int main() {
 	string size_string;
 	int size;
@@ -18,12 +25,6 @@ int main() {
 	cin >> size_string;
 	size = stoi(size_string);
 	Sample pool[size];
-	cout << size << endl;;
-	for(int i = 0; i < size; i++)
-	{
-		cout << i << endl;
-		cout << pool[i].GetChromosoneAsString() << endl;
-	}
 	return 0;
 }
 
