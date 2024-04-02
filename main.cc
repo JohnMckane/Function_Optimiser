@@ -13,11 +13,24 @@ void mutate(int size, float mutation_rate, Sample pool[])
 }
 void print_pool(int size, Sample pool[])
 {
-for(int i = 0; i < size; i++)
-	{
-		cout << pool[i].GetChromosoneAsString() << endl;
-	}
+	for(int i = 0; i < size; i++)
+		{
+			cout << pool[i].GetChromosoneAsString() << endl;
+		}
 }
+void breed(Sample s1, Sample s2, Sample& r1, Sample& r2)
+{
+	unsigned char t1, t2, h1, h2;
+	int cross_point = rand() % 8;
+	t1 = (s1._chromosone << cross_point) >> cross_point;
+	t2 = (s2._chromosone << cross_point) >> cross_point;
+	h1 = (s1._chromosone >> cross_point) << cross_point;
+	h2 = (s2._chromosone >> cross_point) << cross_point;
+	r1 =  Sample(t1 | h2);
+	r2 =  Sample(t2 | h1);
+
+}
+
 int main() {
 	string size_string;
 	int size;
