@@ -20,7 +20,7 @@ void print_pool(int size, Sample pool[])
 			cout << pool[i].GetChromosoneAsString() << endl;
 		}
 }
-void breed(Sample s1, Sample s2, Sample*& r1, Sample*& r2)
+void breed(Sample s1, Sample s2, Sample* r1, Sample* r2)
 {
 	unsigned char t1, t2, h1, h2;
 	int cross_point = rand() % 8;
@@ -35,7 +35,7 @@ void breed(Sample s1, Sample s2, Sample*& r1, Sample*& r2)
 // Score will be 1/ distance of phenotype from 1
 float score(Sample sample)
 {
-	return 1/abs(1-sample.Phenotype());
+	return sample.Phenotype();
 }
 void sortPool(int size, Sample* samples)
 {
@@ -62,7 +62,32 @@ int main() {
 	cout << "Breed Rate:";
 	cin >> breed_string;
 	breed_rate = stof(breed_string);
+	//Create inital pool
 	Sample pool[size];
+	float best_score = 0;
+	for(int i = 0; i < 5000; i++)
+	{
+		//Sort Pool and print score of current best
+		sortPool(size, pool);
+		if(best_score < score(pool[0]))
+		{
+		best_score = score(pool[0]);
+		cout << best_score << endl;
+		}
+		//Breed best size * breed rate samples, replace worst with result
+		int n_breeders = size * breed_rate;
+		Sample * progeny = new Sample[2*n_breeders];
+		for(int j = 0; j < n_breeders; j++)
+		{
+			breed(pool[j], pool[rand() % size], progeny + j*2, progeny+ (j*2+1));	
+		}
+		for(int j = size - 2* n_breeders; j < size; j++)
+		{
+			pool[j] = progeny[j-size];
+		}
+		mutate(size, mutation_rate, pool);
+
+	}
 	return 0;
 }
 
