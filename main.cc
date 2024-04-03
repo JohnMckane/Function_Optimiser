@@ -63,7 +63,6 @@ int main() {
 	cin >> breed_string;
 	breed_rate = stof(breed_string);
 	Sample pool[size];
-	}
 	return 0;
 }
 
