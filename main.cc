@@ -46,11 +46,22 @@ void sortPool(int size, Sample* samples)
 }
 
 int main() {
-	string size_string;
+	string size_string, mutation_string, breed_string;
 	int size;
+	float mutation_rate;
+	float breed_rate;
+	//Get Gene Pool Size
 	cout << "Gene Pool Size:";
 	cin >> size_string;
 	size = stoi(size_string);
+	//Get Mutation Rate
+	cout << "Mutation Rate:";
+	cin >> mutation_string;
+	mutation_rate = stof(mutation_string);
+	//Get Breed rate
+	cout << "Breed Rate:";
+	cin >> breed_string;
+	breed_rate = stof(breed_string);
 	Sample pool[size];
 	sortPool(size, pool);
 	for(int i = 0; i < 10; i++)
