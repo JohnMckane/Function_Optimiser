@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <cmath>
+#include <algorithm>
 #include "Sample.h"
 using namespace std;
 void mutate(int size, float mutation_rate, Sample pool[])
@@ -30,6 +32,18 @@ void breed(Sample s1, Sample s2, Sample& r1, Sample& r2)
 	r2 =  Sample(t2 | h1);
 
 }
+// Score will be 1/ distance of phenotype from 1
+float score(Sample sample)
+{
+	return 1/abs(1-sample.Phenotype());
+}
+void sortPool(int size, Sample* samples)
+{
+	return sort(samples, samples + size, [](Sample a, Sample b)
+                                  {
+                                      return score(a) > score(b);
+                                  });
+}
 
 int main() {
 	string size_string;
@@ -38,6 +52,11 @@ int main() {
 	cin >> size_string;
 	size = stoi(size_string);
 	Sample pool[size];
+	sortPool(size, pool);
+	for(int i = 0; i < 10; i++)
+	{
+		cout << pool[i].Phenotype() << "," << score(pool[i])  << endl;
+	}
 	return 0;
 }
 

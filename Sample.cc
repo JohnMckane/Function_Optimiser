@@ -1,6 +1,7 @@
 #include "Sample.h"
 #include <iostream>
 #include <string>
+#include <cmath>
 using namespace std;
 Sample::Sample(unsigned char chromosone)
 {
@@ -22,4 +23,8 @@ string Sample::GetChromosoneAsString()
 		chromosone_string += to_string(check == (check & _chromosone));
 	}
 	return chromosone_string;
+}
+float Sample::Phenotype()
+{
+	return pow(((float)(255/2) - _chromosone),2);
 }
